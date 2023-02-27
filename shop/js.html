@@ -1,0 +1,48 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/handpose@0.3.3/dist/handpose.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.7.2/dist/tf.min.js"></script>
+</head>
+<body>
+  <video id="video" width="300" height="200" autoplay></video>
+  <canvas id="canvas" width="300" height="200"></canvas>
+  <script>
+    // Load the handpose model
+    const model = await handpose.load();
+
+    // Get a reference to the video and canvas elements
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Get a reference to the video stream
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+
+    // Define a function to detect hands in the video
+    async function detectHands() {
+      // Get the hand prediction results
+      const predictions = await model.estimateHands(video);
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the hand keypoints on the canvas
+      if (predictions.length > 0) {
+        const result = predictions[0].landmarks;
+        for (let i = 0; i < result.length; i++) {
+          ctx.beginPath();
+          ctx.arc(result[i][0], result[i][1], 4, 0, 2 * Math.PI);
+          ctx.fill();
+        }
+      }
+
+      // Repeat the detection process
+      requestAnimationFrame(detectHands);
+    }
+
+    // Start the hand detection process
+    detectHands();
+  </script>
+</body>
+</html>
