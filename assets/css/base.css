@@ -5,7 +5,7 @@
     --text-color: #333;
     --border-color: #dbdbdb;
     --star-gold-color: #ffce3d;
-    
+
     --header-height: 120px;
     --navbar-height: 34px;
     --header-with-search-height: calc(var(--header-height) - var(--navbar-height));
@@ -79,6 +79,7 @@ html {
     from {
         transform: scale(var(--growth-from));
     }
+
     to {
         transform: scale(var(--growth-to));
     }
@@ -202,5 +203,49 @@ html {
 }
 
 .select-input__link:hover {
+    color: var(--primary-color);
+}
+
+/* pagination */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+.pagination-item {
+    margin: 0 12px;
+}
+
+.pagination-item--active .pagination-item__link {
+    color: var(--white-color);
+    background-color: var(--primary-color);
+}
+
+.pagination-item--active .pagination-item__link:hover {
+    background-color: #ed5c3f;
+}
+
+.pagination-item__inactive .pagination-item__link {
+    cursor: default;
+}
+
+.pagination-item__link {
+    --height: 30px;
+    display: block;
+    font-weight: 400;
+    text-decoration: none;
+    font-size: 2rem;
+    color: #939393;
+    min-width: 40px;
+    height: var(--height);
+    line-height: var(--height);
+    text-align: center;
+    border-radius: 2px;
+}
+
+.pagination-item .pagination-item__link:hover {
     color: var(--primary-color);
 }
